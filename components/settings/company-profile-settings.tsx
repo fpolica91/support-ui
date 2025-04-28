@@ -16,14 +16,14 @@ export function CompanyProfileSettings() {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [companyData, setCompanyData] = useState({
-    name: "Acme Inc",
-    website: "https://acme.com",
+    name: "SupportHub",
+    website: "https://supporthub.ai",
     industry: "technology",
     size: "11-50",
     description: "We provide innovative solutions for businesses of all sizes.",
     logo: "",
     primaryColor: "#4f46e5",
-    supportEmail: "support@acme.com",
+    supportEmail: "support@supporthub.ai",
   })
 
   const handleChange = (field: string, value: string) => {
@@ -37,7 +37,8 @@ export function CompanyProfileSettings() {
     e.preventDefault()
     setIsLoading(true)
 
-    // Simulate API call
+    // TODO: Implement API call
+    console.log("Company data:", companyData)
     setTimeout(() => {
       setIsLoading(false)
       toast({
