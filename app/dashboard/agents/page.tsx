@@ -67,9 +67,11 @@ export default function AgentsPage() {
               </div>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button variant="outline" size="sm">
-                <Settings className="mr-2 h-4 w-4" />
-                Configure
+              <Button variant="outline" size="sm" asChild>
+                <Link href={`/dashboard/agents/${agent.id}/edit`}>
+                  <Settings className="mr-2 h-4 w-4" />
+                  Configure
+                </Link>
               </Button>
               <Button variant="destructive" size="sm">
                 <Trash2 className="mr-2 h-4 w-4" />

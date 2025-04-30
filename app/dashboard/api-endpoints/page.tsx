@@ -14,6 +14,7 @@ export default function ApiEndpointsPage() {
       method: "GET",
       description: "Retrieves detailed information about a customer",
       category: "Customer Data",
+      agents: ["Customer Support Agent", "Sales Agent"],
     },
     {
       id: 2,
@@ -22,6 +23,7 @@ export default function ApiEndpointsPage() {
       method: "GET",
       description: "Retrieves the order history for a customer",
       category: "Order Data",
+      agents: ["Customer Support Agent"],
     },
     {
       id: 3,
@@ -30,6 +32,7 @@ export default function ApiEndpointsPage() {
       method: "POST",
       description: "Creates a new support ticket in the system",
       category: "Support",
+      agents: ["Technical Support Agent"],
     },
     {
       id: 4,
@@ -38,6 +41,7 @@ export default function ApiEndpointsPage() {
       method: "PUT",
       description: "Updates customer information in the system",
       category: "Customer Data",
+      agents: ["Customer Support Agent", "Sales Agent"],
     },
     {
       id: 5,
@@ -46,6 +50,7 @@ export default function ApiEndpointsPage() {
       method: "GET",
       description: "Retrieves detailed information about a product",
       category: "Product Data",
+      agents: ["Sales Agent"],
     },
   ]
 
@@ -106,12 +111,24 @@ export default function ApiEndpointsPage() {
                   <p className="text-sm font-medium text-muted-foreground">Description</p>
                   <p>{endpoint.description}</p>
                 </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Used by</p>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {endpoint.agents.map((agent) => (
+                      <Badge key={agent} variant="secondary" className="text-xs">
+                        {agent}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
               </div>
             </CardContent>
             <CardFooter className="flex justify-end gap-2">
-              <Button variant="outline" size="sm">
-                <Settings className="mr-2 h-4 w-4" />
-                Configure
+              <Button variant="outline" size="sm" asChild>
+                <Link href={`/dashboard/api-endpoints/${endpoint.id}`}>
+                  <Settings className="mr-2 h-4 w-4" />
+                  Configure
+                </Link>
               </Button>
               <Button variant="destructive" size="sm">
                 <Trash2 className="mr-2 h-4 w-4" />

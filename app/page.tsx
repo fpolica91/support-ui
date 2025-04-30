@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer"
 
 export default function LandingPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center">
+    <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2 font-bold text-xl">

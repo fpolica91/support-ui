@@ -41,7 +41,7 @@ export default function DashboardPage() {
   ]
 
   return (
-    <div className="flex flex-col gap-6 px-4 md:px-6">
+    <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <div className="flex items-center gap-2">
@@ -167,7 +167,7 @@ export default function DashboardPage() {
                   index="name"
                   categories={["value"]}
                   colors={["blue"]}
-                  formatType="conversations"
+                  valueFormatter={(value) => `${value} conversations`}
                   yAxisWidth={40}
                 />
               </CardContent>
@@ -183,7 +183,7 @@ export default function DashboardPage() {
                   index="name"
                   categories={["value"]}
                   colors={["green"]}
-                  formatType="minutes"
+                  valueFormatter={(value) => `${value} min`}
                   yAxisWidth={40}
                 />
               </CardContent>
@@ -202,7 +202,7 @@ export default function DashboardPage() {
                   index="name"
                   categories={["value"]}
                   colors={["emerald", "blue", "amber", "rose"]}
-                  formatType="percentage"
+                  valueFormatter={(value) => `${value}%`}
                 />
               </CardContent>
             </Card>
@@ -217,7 +217,7 @@ export default function DashboardPage() {
                   index="name"
                   categories={["value"]}
                   colors={["violet"]}
-                  formatType="percentage"
+                  valueFormatter={(value) => `${value}%`}
                   yAxisWidth={40}
                 />
               </CardContent>

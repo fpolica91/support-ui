@@ -313,33 +313,13 @@ function getPayloadConfigFromPayload(config: ChartConfig, payload: unknown, key:
 
 export { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartStyle }
 
-type FormatType = "percentage" | "minutes" | "conversations" | "currency" | "number";
-
-function formatValue(value: number, formatType?: FormatType): string {
-  if (!formatType) return value.toString();
-  
-  switch (formatType) {
-    case "percentage":
-      return `${value}%`;
-    case "minutes":
-      return `${value} min`;
-    case "conversations":
-      return `${value} conversations`;
-    case "currency":
-      return `$${value.toLocaleString()}`;
-    case "number":
-    default:
-      return value.toLocaleString();
-  }
-}
-
+// Define chart components
 export function BarChart({
   data,
   index,
   categories,
   colors = ["blue"],
   valueFormatter,
-  formatType,
   yAxisWidth = 56,
   height = 300,
 }: {
@@ -348,7 +328,6 @@ export function BarChart({
   categories: string[]
   colors?: string[]
   valueFormatter?: (value: number) => string
-  formatType?: FormatType
   yAxisWidth?: number
   height?: number
 }) {
@@ -430,7 +409,7 @@ export function BarChart({
           left={margin.left}
           tickFormat={(value) => {
             if (valueFormatter) return valueFormatter(Number(value))
-            return formatValue(Number(value), formatType)
+            return String(value)
           }}
           stroke="#e5e7eb"
           tickStroke="#e5e7eb"
@@ -510,7 +489,7 @@ export function BarChart({
           </div>
           <div>
             {(tooltipData as any).category}:{" "}
-            {valueFormatter ? valueFormatter((tooltipData as any).value) : formatValue((tooltipData as any).value, formatType)}
+            {valueFormatter ? valueFormatter((tooltipData as any).value) : (tooltipData as any).value}
           </div>
         </TooltipInPortal>
       )}
@@ -524,7 +503,6 @@ export function LineChart({
   categories,
   colors = ["blue"],
   valueFormatter,
-  formatType,
   yAxisWidth = 56,
   height = 300,
 }: {
@@ -533,7 +511,6 @@ export function LineChart({
   categories: string[]
   colors?: string[]
   valueFormatter?: (value: number) => string
-  formatType?: FormatType
   yAxisWidth?: number
   height?: number
 }) {
@@ -613,7 +590,7 @@ export function LineChart({
           left={margin.left}
           tickFormat={(value) => {
             if (valueFormatter) return valueFormatter(Number(value))
-            return formatValue(Number(value), formatType)
+            return String(value)
           }}
           stroke="#e5e7eb"
           tickStroke="#e5e7eb"
@@ -699,7 +676,7 @@ export function LineChart({
           </div>
           <div>
             {(tooltipData as any).category}:{" "}
-            {valueFormatter ? valueFormatter((tooltipData as any).value) : formatValue((tooltipData as any).value, formatType)}
+            {valueFormatter ? valueFormatter((tooltipData as any).value) : (tooltipData as any).value}
           </div>
         </TooltipInPortal>
       )}
@@ -713,7 +690,6 @@ export function PieChart({
   categories,
   colors = ["blue", "green", "red", "yellow"],
   valueFormatter,
-  formatType,
   height = 300,
 }: {
   data: any[]
@@ -721,7 +697,6 @@ export function PieChart({
   categories: string[]
   colors?: string[]
   valueFormatter?: (value: number) => string
-  formatType?: FormatType
   height?: number
 }) {
   const margin = { top: 20, right: 20, bottom: 20, left: 20 }
@@ -871,7 +846,7 @@ export function PieChart({
             <strong>{(tooltipData as any).label}</strong>
           </div>
           <div>
-            {valueFormatter ? valueFormatter((tooltipData as any).value) : formatValue((tooltipData as any).value, formatType)}(
+            {valueFormatter ? valueFormatter((tooltipData as any).value) : (tooltipData as any).value}(
             {Math.round((tooltipData as any).percent)}%)
           </div>
         </TooltipInPortal>
