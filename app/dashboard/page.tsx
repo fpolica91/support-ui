@@ -4,8 +4,12 @@ import { MessageSquare, Users, Bot, ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { BarChart, LineChart, PieChart } from "@/components/ui/chart"
+import { fetchDashboardData } from "./actions"
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  // Fetch data server-side
+  const dashboardData = await fetchDashboardData()
+
   // Sample data for charts
   const conversationData = [
     { name: "Mon", value: 40 },
@@ -45,7 +49,11 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <div className="flex items-center gap-2">
-          <Button variant="outline">Export</Button>
+          <form action="/api/export-dashboard">
+            <Button variant="outline" formAction="/api/export-dashboard">
+              Export
+            </Button>
+          </form>
           <Link href="/dashboard/agents/create">
             <Button>
               <span>New Agent</span>
@@ -67,8 +75,8 @@ export default function DashboardPage() {
                 <MessageSquare className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">1,248</div>
-                <p className="text-xs text-muted-foreground">+12% from last month</p>
+                <div className="text-2xl font-bold">{dashboardData.conversations}</div>
+                <p className="text-xs text-muted-foreground">{dashboardData.conversationsChange} from last month</p>
               </CardContent>
             </Card>
             <Card>
@@ -77,8 +85,8 @@ export default function DashboardPage() {
                 <Users className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">573</div>
-                <p className="text-xs text-muted-foreground">+8% from last month</p>
+                <div className="text-2xl font-bold">{dashboardData.users}</div>
+                <p className="text-xs text-muted-foreground">{dashboardData.usersChange} from last month</p>
               </CardContent>
             </Card>
             <Card>
@@ -87,8 +95,8 @@ export default function DashboardPage() {
                 <Bot className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">12</div>
-                <p className="text-xs text-muted-foreground">+2 from last month</p>
+                <div className="text-2xl font-bold">{dashboardData.agents}</div>
+                <p className="text-xs text-muted-foreground">{dashboardData.agentsChange} from last month</p>
               </CardContent>
             </Card>
           </div>
@@ -113,8 +121,10 @@ export default function DashboardPage() {
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="text-sm text-muted-foreground">{i * 10} min ago</div>
-                        <Button variant="ghost" size="icon">
-                          <ArrowUpRight className="h-4 w-4" />
+                        <Button variant="ghost" size="icon" asChild>
+                          <Link href={`/dashboard/conversations/${i}`}>
+                            <ArrowUpRight className="h-4 w-4" />
+                          </Link>
                         </Button>
                       </div>
                     </div>
@@ -260,9 +270,11 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <div className="mt-6">
-                  <Button variant="outline" className="w-full">
-                    Download Report
-                  </Button>
+                  <form action="/api/download-report">
+                    <Button variant="outline" className="w-full" formAction="/api/download-report">
+                      Download Report
+                    </Button>
+                  </form>
                 </div>
               </CardContent>
             </Card>
@@ -329,9 +341,11 @@ export default function DashboardPage() {
                 ))}
               </div>
               <div className="mt-6">
-                <Button variant="outline" className="w-full">
-                  View Detailed Topic Analysis
-                </Button>
+                <Link href="/dashboard/analytics/topics">
+                  <Button variant="outline" className="w-full">
+                    View Detailed Topic Analysis
+                  </Button>
+                </Link>
               </div>
             </CardContent>
           </Card>
